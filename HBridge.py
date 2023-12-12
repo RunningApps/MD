@@ -1,5 +1,5 @@
 import time
-import RPi.GPIO as GPIO
+import SimulRPi.GPIO as GPIO
 
 # Pin-Definitionen für Motor X
 PIN_STEP_MX = 1

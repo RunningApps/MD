@@ -6,7 +6,6 @@ class Verfahrwege:
         stepmotor = sm.StepMotor() 
         hbridge_x = hb.HBridge()
         hbridge_y = hb.HBridge()
-
         panel_width = 300
         panel_height = 600
         brush_height = 10
@@ -67,63 +66,108 @@ class Verfahrwege:
         move.start()
         self.check_border(move, sensor_type)
         
-    def route_1(self):
-        while(self.ultrasonic_right < 0.1):
+    def route_1(self): #Route oben unten
+        while(self.ultrasonic_right < 0.1): #solagne rechter Rand nicht erreicht
 
-            if(self.ultrasonic_top.distance > 0.1):
-                self.stepmotor.move_y(self.panel_height)
-                self.start_check_border()
-                self.stepmotor.move_x(self.brush_length)
-                self.start_check_border()  
+            if(self.ultrasonic_top.distance > 0.1): #Falls am oberen Rand
+                self.stepmotor.move_y(self.panel_height)#bewegung
+                self.start_check_border(bottom)#abbruch bei unterem Rand
+                self.stepmotor.move_x(self.brush_length)# bewegung nach rechts
+                self.start_check_border(right) #abbruch am rechten rand  
 
-            elif(self.ultrasonic_bottom.distance > 0.1):
-                self.stepmotor.move_y(-self.panel_height)
-                self.start_check_border()
-                self.stepmotor.move_x(self.brush_length)
-                self.start_check_border()
+            elif(self.ultrasonic_bottom.distance > 0.1): #Falls am unteren Rand
+                self.stepmotor.move_y(-self.panel_height) #bewegung nach oben
+                self.start_check_border(top)#abbruch am oberen rand
+                self.stepmotor.move_x(self.brush_length)#bewegung nach rechts
+                self.start_check_border(right)#abbruch am rechten rand
 
-        if(self.ultrasonic_top.distance > 0.1):
-                self.stepmotor.move_y(self.panel_height)
+        if(self.ultrasonic_top.distance > 0.1):#Falls am oberen Rand
+                self.stepmotor.move_y(self.panel_height)#bewegung nach unten
                 return
         
-        elif (self.ultrasonic_bottom.distance > 0.1):
-                self.stepmotor.move_y(-self.panel_height)
+        elif (self.ultrasonic_bottom.distance > 0.1):#Falls am unteren Rand
+                self.stepmotor.move_y(-self.panel_height)#bewegung nach oben
                 return
 
     def route_2(self):
-        progress = 0
-        self.stepmotor.move_y(self.panel_height)
-        self.stepmotor.move_y(-self.panel_height)
-        self.stepmotor.move_x(self.panel_height)
-        self.progress = progress + self.brush_length
+        progress = 0 #Fortschritt des Weges in x Richtung
+    
+        self.progress = progress + self.brush_length #Fortschritt um Buerstenlaenge addiert
 
-        while(self.ultrasonic_right < 0.1):
-            if(self.ultrasonic_left < 0.1):
-                if(self.ultrasonic_top.distance > 0.1):
-                    self.stepmotor.move_y(self.panel_height)
-                    self.start_check_border()
-                    self.stepmotor.move_x(-progress)
-                    self.self.start_check_border()
-                    progress = progress + self.brush_length
+        while(self.ultrasonic_right < 0.1): #solange der rechte Rand NICHT erreicht wurde
+            if(self.ultrasonic_left < 0.1): #Falls die Position NICHT am linken Rand ist
+                if(self.ultrasonic_top.distance > 0.1): #Falls die Position am oberen Rand ist
+                    self.stepmotor.move_y(self.panel_height) #Bewegung nach unten
+                    self.start_check_border(bottom) #Abbruch bei untere Rand
+                    self.stepmotor.move_x(-progress) #Bewegeung nach links
+                    self.self.start_check_border(left) #Abbruch bei linkem Rand 
+                    progress = progress + self.brush_length #Fortschritt um Buerstenlaenge erweitert
 
-            if(self.ultrasonic_left > 0.1): 
-                if(self.ultrasonic_bottom.distance > 0.1):
-                    self.stepmotor.move_y(-self.panel_height)
-                    self.start_check_border()
-                    self.stepmotor.move_x(progress)
-                    self.start_check_border() 
+            if(self.ultrasonic_left > 0.1): #Falls am linken Rand
+                if(self.ultrasonic_bottom.distance > 0.1): #Falls am unteren Rand
+                    self.stepmotor.move_y(-self.panel_height) #Bewegung nach oben
+                    self.start_check_border(top) #Abbruch bei oberer Rand
+                    self.stepmotor.move_x(progress) #Bewegung nach rechts
+                    self.start_check_border(right) #Abbruch bei rechtem Rand
 
-        if(self.ultrasonic_top.distance > 0.1):
-                    self.stepmotor.move_y(self.panel_height)
-                    self.start_check_border()
-                    self.stepmotor.move_x(-progress)
-                    self.start_check_border()  
-                    self.stepmotor.move_y(-self.panel_height)
-                    self.stepmotor.move_y(self.panel_height)
+        if(self.ultrasonic_top.distance > 0.1): #Falls beim oberen Rand
+                    self.stepmotor.move_y(self.panel_height) #Bewegung nach unten
+                    self.start_check_border(bottom) #Abbruch beim unteren Rand
+                    self.stepmotor.move_x(-progress) #Bewegung nach links
+                    self.start_check_border(left) #Abbruch beim linken Rand
+                    self.stepmotor.move_y(-self.panel_width) #Bewegung nach oben
+                    self.stepmotor.move_y(self.panel_width) #Bewegung nach unten
                     return
 
-    def route_3(self):
-        self.stepmotor.move_x(self.panel_height):
+    def route_3(self):#oben unten 90 grad gedreht
+        while(self.ultrasonic_bottom < 0.1): #solagne untere Rand nicht erreicht
 
-    def route_4():
-        stepmotor.move_x(self.panel_height):
+            if(self.ultrasonic_left.distance > 0.1): #wenn linker rand 
+                self.stepmotor.move_x(self.panel_width)#nach rechts
+                self.start_check_border(right)#abbruch rechts
+                self.stepmotor.move_y(self.brush_length)# nach unten
+                self.start_check_border(bottom) #abbruch unten
+
+            elif(self.ultrasonic_right.distance > 0.1): #wenn rechts
+                self.stepmotor.move_x(-self.panel_width) #nach links
+                self.start_check_border(left)#abbruch links
+                self.stepmotor.move_y(self.brush_length)#bewegung nach unten
+                self.start_check_border(bottom)#abbruch unten
+
+        if(self.ultrasonic_left.distance > 0.1):#Falls  links
+                self.stepmotor.move_x(self.panel_width)#nach rechts
+                return
+        
+        elif (self.ultrasonic_right.distance > 0.1):#Falls rechts
+                self.stepmotor.move_x(-self.panel_width)#nach links
+                return
+
+    def route_4(self):
+        progress = 0 #Fortschritt des Weges in y Richtung
+    
+        self.progress = progress + self.brush_length #Fortschritt um Buerstenlaenge addiert
+
+        while(self.ultrasonic_bottom < 0.1):#waehrend noch NICHT unten
+            if(self.ultrasonic_top < 0.1): #wenn nicht oben
+                if(self.ultrasonic_left.distance > 0.1): #wenn links
+                    self.stepmotor.move_x(self.panel_width) #nach rechts
+                    self.start_check_border(right) #abbruch rehts
+                    self.stepmotor.move_y(-progress) #nach oben
+                    self.self.start_check_border(top) # abbruch oben
+                    progress = progress + self.brush_length 
+
+            if(self.ultrasonic_top > 0.1): #wenn oben
+                if(self.ultrasonic_right.distance > 0.1): #Falls rechts
+                    self.stepmotor.move_x(-self.panel_width) #nach links
+                    self.start_check_border(left) #Abbruch links
+                    self.stepmotor.move_y(progress) #nach unten
+                    self.start_check_border(bottom) #Abbruch unten
+
+        if(self.ultrasonic_left.distance > 0.1): #Falls links
+                    self.stepmotor.move_x(self.panel_width) #nach rechts
+                    self.start_check_border(right) #Abbruch rechts
+                    self.stepmotor.move_y(-progress) #Bewegung nach oben
+                    self.start_check_border(top) #Abbruch oben
+                    self.stepmotor.move_x(-self.panel_width) #Bewegung nach links
+                    self.stepmotor.move_x(self.panel_width) #Bewegung nach rechts
+                    return
