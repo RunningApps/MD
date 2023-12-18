@@ -27,7 +27,7 @@ def Verfahrweg():
     #process = multiprocessing.Process(target=move_x, args(5)) 
     #process.start() # Startet den Process move_x
     args = [ 1]
-    results = multiprocessing..starmap(move_x, args(2))
+    results = multiprocessing.starmap(move_x, args(2))
 
     check_distance(p1) # Ruft die Funktion check_distance auf
 
