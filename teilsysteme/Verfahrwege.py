@@ -1,4 +1,5 @@
-import StepMotor as sm
+import teilsysteme.StepMotor as sm
+import multiprocess
 import HBridge as hb
 from multiprocessing import Process
 import os
@@ -63,40 +64,33 @@ class Verfahrwege:
         move.start()
         self.check_border(move) 
 
-    def start_check_border(self, sensor_type: string):
-        #move = multiprocessing.Process(target = move_x)
-        #move.start()
-        self.check_border(move, sensor_type)
+    def start_check_border(self, sensor_type: string, m):
+        m.start()
+        self.check_border(m, sensor_type)
         
     def route_1(self): #Route oben unten
-        while(self.ultrasonic_right < 0.1): #solagne rechter Rand nicht erreicht
+        #while(self.ultrasonic_right < 0.1): #solagne rechter Rand nicht erreicht
 
-            if(self.ultrasonic_top.distance > 0.1): #Falls am oberen Rand
+         #   if(self.ultrasonic_top.distance > 0.1): #Falls am oberen Rand
                 move = multiprocessing.Process(target = move_y, args=(panel_hight,))#bewegung runter
-                move.start()
-                self.start_check_border("bottom")#abbruch bei unterem Rand
-                move = multiprocessing.Process(target = move_x, args=(brush_length,))#bewegung
-                move.start()# bewegung nach rechts
-                self.start_check_border("right") #abbruch am rechten rand  
+                self.start_check_border("bottom", move)#abbruch bei unterem Rand
+                move = multiprocessing.Process(target = move_x, args=(brush_length,))#bewegung nach rechts
+                self.start_check_border("right", move) #abbruch am rechten rand  
 
             elif(self.ultrasonic_bottom.distance > 0.1): #Falls am unteren Rand
                 move = multiprocessing.Process(target = move_y, args=(-panel_hight,)) #bewegung nach oben
-                move.start()
-                self.start_check_border("top")#abbruch am oberen rand
+                self.start_check_border("top", move)#abbruch am oberen rand
                 move = multiprocessing.Process(target = move_x, args=(brush_length,))#bewegung
-                move.start()#bewegung nach rechts
-                self.start_check_border(right)#abbruch am rechten rand
+                self.start_check_border("right", move)#abbruch am rechten rand
 
         if(self.ultrasonic_top.distance > 0.1):#Falls am oberen rechten Rand
                 move = multiprocessing.Process(target = move_y, args=(panel_hight,))#bewegung nach unten
-                move.start()
-                self.start_check_border("bottom")#abbruch bei unterem Rand
+                self.start_check_border("bottom", move)#abbruch bei unterem Rand
                 return
         
         elif (self.ultrasonic_bottom.distance > 0.1):#Falls am unteren rechten Rand
                 move = multiprocessing.Process(target = move_y, args=(-panel_hight,))#bewegung nach oben
-                move.start()
-                self.start_check_border("top")#abbruch am oberen rand
+                self.start_check_border("top", move)#abbruch am oberen rand
                 return
 
     def route_2(self):

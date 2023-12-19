@@ -2,10 +2,8 @@ import HBridge as hb
 import UltraSonic as us
 
 class StepMotor():
-    hbridge = hb.HBridge()
-    self.circumference = 0.05
-    self.stepsize = 1.8  
-    self.frequency = 10
+    def __init__(self, pin_pul, pin_dir, pin_enable, pin_sw5, pin_sw6, pin_sw7, pin_sw8);
+        hbridge = hb.HBridge(pin_pul, pin_dir, pin_enable, pin_sw5, pin_sw6, pin_sw7, pin_sw8)
 
     def step_per_revolution(self) -> int: 
         return 360 / self.stepsize
@@ -13,24 +11,14 @@ class StepMotor():
     def amount_of_steps(self, distance:int):
         steps = self.steps_per_revolution() * distance / self.circumference 
 
-    def set_speed_x(speed: int):  
+    def set_speed(speed: int):  
         self.frequency = speed/60
 
-    def set_speed_y(speed: int):  
-        self.frequency = speed/60
+    def set_direction(dir: bool):
+        self.hbridge.direction(True)
 
-    def set_direction_x(dir: bool):
-        self.hbridge.set_x_direction(True)
-
-    def set_direction_x(dir: bool):
-        self.hbridge.set_y_direction(True)
-
-    def move_x(self, distance: int): 
+    def move(self, point: str, distance: int): 
         steps = self.amount_of_steps(distance)
-        self.hbridge.pwm_x(steps, self.frequency)
+        self.hbridge.puls(steps, self.frequency)
 
-    def move_y(self, distance: int):
-        steps = self.amount_of_steps(distance)
-        self.hbridge.pwm_y(steps, self.frequency)
-
-    
+    def

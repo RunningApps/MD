@@ -1,5 +1,10 @@
-import Verfahrwege
+from teilsysteme import Verfahrwege
 import multiprocessing
 
 if name == "main":
-    Verfahrweg()
+    v = Verfahrwege()
+    v.route_1()
+
+    while(cloudempty)
+
+        #ToThings

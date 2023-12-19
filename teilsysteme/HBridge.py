@@ -16,7 +16,6 @@ class HBridge():
         self.init_pins()
         self.enable()
         self.direction(True)
-        self.step_size(2)
 
     def init_pins(self):
         GPIO.setmode(GPIO.BCM)
@@ -30,11 +29,11 @@ class HBridge():
         GPIO.setup(self.PIN_M2, GPIO.OUT)
 
     def puls(self, steps, frequency):
-        for i in range(steps):
-            period = 1/frequency
-            ton = period/2
-            toff = ton
+        period = 1/frequency
+        ton = period/2
+        toff = ton
 
+        for i in range(steps):
             GPIO.output(True, PIN_PUL)
             time.delay(ton)
             GPIO.output(False, PIN_PUL)
@@ -51,47 +50,47 @@ class HBridge():
     def turn_on(self)
         GPIO.output(self.PIN_ENABLE, True)
         time.sleep(DELAY_SETUP)
-
+        
     def step_size(microstep: int):
         match microstep:
             case 2:
-                GPIO.output(False, PIN_SW5)
-                GPIO.output(True, PIN_SW6)
-                GPIO.output(True, PIN_SW7)
-                GPIO.output(True, PIN_SW8)
+                GPIO.output(False, self.PIN_SW5)
+                GPIO.output(True, self.PIN_SW6)
+                GPIO.output(True, self.PIN_SW7)
+                GPIO.output(True, self.PIN_SW8)
             
             case 4:
-                GPIO.output(True, PIN_SW5)
-                GPIO.output(False, PIN_SW6)
-                GPIO.output(True, PIN_SW7)
-                GPIO.output(True, PIN_SW8)
+                GPIO.output(False, self.PIN_SW5)
+                GPIO.output(True, self.PIN_SW6)
+                GPIO.output(True, self.PIN_SW7)
+                GPIO.output(True, self.PIN_SW8)
 
             case 8:
-                GPIO.output(False, PIN_SW5)
-                GPIO.output(False, PIN_SW6)
-                GPIO.output(True, PIN_SW7)
-                GPIO.output(True, PIN_SW8)
+                GPIO.output(False, self.PIN_SW5)
+                GPIO.output(True, self.PIN_SW6)
+                GPIO.output(True, self.PIN_SW7)
+                GPIO.output(True, self.PIN_SW8)
 
             case 16:
-                GPIO.output(True, PIN_SW5)
-                GPIO.output(True, PIN_SW6)
-                GPIO.output(False, PIN_SW7)
-                GPIO.output(True, PIN_SW8)
+                GPIO.output(False, self.PIN_SW5)
+                GPIO.output(True, self.PIN_SW6)
+                GPIO.output(True, self.PIN_SW7)
+                GPIO.output(True, self.PIN_SW8)
 
             case 32:
-                GPIO.output(False, PIN_SW5)
-                GPIO.output(True, PIN_SW6)
-                GPIO.output(False, PIN_SW7)
-                GPIO.output(True, PIN_SW8)
+                GPIO.output(False, self.PIN_SW5)
+                GPIO.output(True, self.PIN_SW6)
+                GPIO.output(True, self.PIN_SW7)
+                GPIO.output(True, self.PIN_SW8)
 
             case 64:
-                GPIO.output(True, PIN_SW5)
-                GPIO.output(False, PIN_SW6)
-                GPIO.output(False, PIN_SW7)
-                GPIO.output(True, PIN_SW8)
+                GPIO.output(False, self.PIN_SW5)
+                GPIO.output(True, self.PIN_SW6)
+                GPIO.output(True, self.PIN_SW7)
+                GPIO.output(True, self.PIN_SW8)
 
             case 128:
-                GPIO.output(False, PIN_SW5)
-                GPIO.output(False, PIN_SW6)
-                GPIO.output(False, PIN_SW7)
-                GPIO.output(True, PIN_SW8)
+                GPIO.output(False, self.PIN_SW5)
+                GPIO.output(True, self.PIN_SW6)
+                GPIO.output(True, self.PIN_SW7)
+                GPIO.output(True, self.PIN_SW8)
