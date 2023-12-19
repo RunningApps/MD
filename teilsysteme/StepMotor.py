@@ -1,24 +1,39 @@
-import HBridge as hb 
-import UltraSonic as us
+from teilsysteme import HBridge as hb
 
 class StepMotor():
-    def __init__(self, pin_pul, pin_dir, pin_enable, pin_sw5, pin_sw6, pin_sw7, pin_sw8);
-        hbridge = hb.HBridge(pin_pul, pin_dir, pin_enable, pin_sw5, pin_sw6, pin_sw7, pin_sw8)
+    def __init__(self, pin_pul, pin_dir, pin_enable):
+        self.hbridge = hb.HBridge(pin_pul, pin_dir, pin_enable)
+        self.circumference = 0.05
+        self.stepsize = 1.8  
 
-    def step_per_revolution(self) -> int: 
+    def steps_per_revolution(self) -> int: 
         return 360 / self.stepsize
 
     def amount_of_steps(self, distance:int):
         steps = self.steps_per_revolution() * distance / self.circumference 
+        return int(steps)
 
-    def set_speed(speed: int):  
-        self.frequency = speed/60
+    def set_speed(self, speed: int) -> float:  
+        return speed/60
 
-    def set_direction(dir: bool):
+    def set_direction_clockwise(self) -> None:
         self.hbridge.direction(True)
 
-    def move(self, point: str, distance: int): 
-        steps = self.amount_of_steps(distance)
-        self.hbridge.puls(steps, self.frequency)
+    def set_direction_anti_clockwise(self) -> None:
+        self.hbridge.direction(False)
 
-    def
+    def move(self, distance: int, direction: str, speed: int) -> None: 
+        match direction:
+            case "Right":
+                self.set_direction_clockwise()
+            
+            case "Left":
+                self.set_direction_anti_clockwise()
+
+            case _:
+                print("Not valid direction")
+                return 
+            
+        steps = self.amount_of_steps(distance)
+        frequency = self.set_speed(speed)
+        self.hbridge.puls(steps, frequency)
