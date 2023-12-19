@@ -1,4 +1,4 @@
-#from teilsysteme import StepMotor as SM
+from teilsysteme import StepMotor as SM
 from teilsysteme import Verfahrwege as vw
 
 if __name__ == '__main__':

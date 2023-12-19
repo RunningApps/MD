@@ -11,7 +11,7 @@ class Verfahrwege:
         self.y_step = sm.StepMotor(8, 10, 12)
         self.panel_width = 300
         self.panel_height = 600
-        self.brush_height = 10
+        self.brush_height = 100
         self.right = us.UltraSonic()
         
         
@@ -40,10 +40,14 @@ class Verfahrwege:
 
             case "right":
                 while(True):
-                    if self.right.ultrasonic_right() > 0.1:
+                    if self.right.ultrasonic_right > 0.1:
                         #self.ultrasonic_right.distance > 0.1:
+                        print("before terminate")
                         move.terminate()
+                        print("after terminate")
                         move.join() 
+                        print("after join")
+                        
                         return
 
             case "all":
@@ -72,7 +76,7 @@ class Verfahrwege:
         self.check_border(m, sensor_type)
         
     def route_1(self):    
-        move = multiprocessing.Process(target = self.x_step.move, args=(self.brush_height))#bewegung nach rechts
+        move = multiprocessing.Process(target = self.x_step.move, args=(self.brush_height, "Right", 60))#bewegung nach rechts
         
         self.start_check_border("right", move) #abbruch am rechten rand  
         #print("Hello")
