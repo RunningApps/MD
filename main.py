@@ -14,5 +14,16 @@ if __name__ == '__main__':
     
     vw = vw.Verfahrwege()
     vw.route_1()
+    
+    #GPIO.cleanup()
+    #data_request_event = "Marke1;Gummi;300;30;Marke2;Hartgummi;500;50;100;Staub;1;123.5"
 
-    GPIO.cleanup()
+    #while(True):
+       # while(data_request_event):
+    #data = data_request_event.split(";")
+
+    #print(data)
+
+
+
+
