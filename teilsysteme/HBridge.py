@@ -9,9 +9,9 @@ class HBridge():
         self.PIN_DIR = pin_dir
         self.PIN_ENABLE = pin_enable
 
-        self.initialize_gpios()        # initializes the pins
-        self.turn_off()         # during instantiation the stepper is disabled
-        self.direction(True)    # clockwise 
+        self.initialize_gpios()         # initializes the pins
+        self.turn_off()                 # during instantiation the stepper is disabled
+        self.direction(True)            # clockwise 
 
     def initialize_gpios(self) -> None:
         GPIO.setmode(GPIO.BCM)
