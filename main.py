@@ -1,20 +1,18 @@
-from teilsysteme import StepMotor as SM
-<<<<<<< HEAD
-
-if __name__ == '__main__':
-    x_move = SM.StepMotor(2, 4, 6)
-    y_move = SM.StepMotor(8, 10, 12)
-
-    x_move.move(5, "Right", 500)
-=======
 from teilsysteme import Verfahrwege as vw
+from teilsysteme import StepMotor as sm
+import SimulRPi.GPIO as GPIO
 
 if __name__ == '__main__':
-    #x_move = SM.StepMotor(2, 4, 6)
-   # y_move = SM.StepMotor(8, 10, 12)
+    #x_stepmotor = sm.StepMotor(2, 4, 6)
+    #y_stepmotor = sm.StepMotor(8, 10, 12)
+   
+    #x_stepmotor.move(0.02, "Right", 1000)
+    #y_stepmotor.move(0.02, "Left", 1000)
 
-    #x_move.move(0.02, "Right", 1000)
+    #print("Exiting main process...")
+    #GPIO.cleanup()
+    
+    vw = vw.Verfahrwege()
+    vw.route_1()
 
-    v = vw.Verfahrwege()
-    v.route_1()
->>>>>>> 1b623393ec1d64c888f585d9d8daaa4e7b4c54bc
+    GPIO.cleanup()

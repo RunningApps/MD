@@ -1,7 +1,11 @@
-import time
-import SimulRPi.GPIO as GPIO
+try:
+    import RPi.GPIO as GPIO
+except ImportError:
+    import SimulRPi.GPIO as GPIO
 
-DELAY_SETUP  = 5*10**-6     # Delay time for internal circuitry to stabilize after Wake-Up (Mikrosekunde)
+import time
+
+DELAY_SETUP  = 5*10**-6     # Delay time for internal circuitry to stabilize (Mikrosekunde)
 
 class HBridge():
     def __init__(self, pin_pul, pin_dir, pin_enable) -> None:   # Takes corresponding pins for the X or the Y Stepmotor
@@ -41,3 +45,4 @@ class HBridge():
     def turn_on(self)-> None:
         GPIO.output(self.PIN_ENABLE, True)
         time.sleep(DELAY_SETUP)
+

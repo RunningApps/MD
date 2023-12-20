@@ -1,65 +1,68 @@
-import teilsysteme.StepMotor as sm
-import time
-import multiprocessing
+from teilsysteme import StepMotor as sm
 from teilsysteme import UltraSonic as us
 from multiprocessing import Process
-import os
+import multiprocessing
+import time
 
 class Verfahrwege:
-    def __init__(self):
+    def __init__(self): # Evtl. PinLayout in nebenfile
         self.x_step = sm.StepMotor(2, 4, 6)
         self.y_step = sm.StepMotor(8, 10, 12)
+
+        self.right_ultra_sonic  = us.UltraSonic()
+        self.left_ultra_sonic  = us.UltraSonic()
+        self.top_ultra_sonic  = us.UltraSonic()
+        self.bottom_ultra_sonic  = us.UltraSonic()
+
         self.panel_width = 300
         self.panel_height = 600
         self.brush_height = 100
-        self.right = us.UltraSonic()
-        
-        
+    
+    def start_process(self, fnc):
+        process = multiprocessing.Process(target=fnc) 
+        process.start()
+        return process
+    
+    def terminate_process(self, process):
+        process.terminate()
+        process.join()
+     
     def check_border(self, move, sensor_type):
         match sensor_type:
             case "top":
                 while(True):
-                    if self.ultrasonic_top.distance > 0.1:
-                        move.terminate()
-                        move.join() 
+                    if self.top_ultra_sonic.distance > 0.1:
+                        self.terminate_process(move) 
                         return
 
             case "bottom":
                 while(True):
-                    if self.ultrasonic_bottom.distance > 0.1:
-                        move.terminate()
-                        move.join() 
+                    if self.bottom_ultra_sonic.distance > 0.1:
+                        self.terminate_process(move)  
                         return    
 
             case "left":
                 while(True):
-                    if self.ultrasonic_left.distance > 0.1:
-                        move.terminate()
-                        move.join() 
+                    if self.left_ultra_sonic.distance > 0.1:
+                        self.terminate_process(move)  
                         return
 
             case "right":
                 while(True):
-                    if self.right.ultrasonic_right > 0.1:
-                        #self.ultrasonic_right.distance > 0.1:
-                        print("before terminate")
-                        move.terminate()
-                        print("after terminate")
-                        move.join() 
-                        print("after join")
-                        
+                    if self.right_ultra_sonic.distance() > 0.1:
+                        self.terminate_process(move) 
                         return
 
             case "all":
                 while(True):
-                    if  (self.ultrasonic_bottom.distance > 0.1)  or (self.ultrasonic_left.distance > 0.1) or (self.ultrasonic_right.distance > 0.1):
+                    if  (self.bottom_ultra_sonic.distance > 0.1)  or (self.top_ultra_sonic.distance > 0.1)  or (self.right_ultra_sonic.distance > 0.1) or (self.left_ultra_sonic.distance > 0.1):
                         self.hbridge.enable(False)
-                        move.terminate()
-                        move.join() 
+                        self.terminate_process(move) 
                         return
 
             case default:
                 print("Not available")
+                return None
 
     def reference(self):
         move = multiprocessing.Process(target = self.x_step)
@@ -69,18 +72,16 @@ class Verfahrwege:
         move = multiprocessing.Process(target = self.y_step)
         move.start()
         self.check_border(move) 
-
-    def start_check_border(self, sensor_type: str, m):
-        m.start()
-        time.sleep(2)
-        self.check_border(m, sensor_type)
         
     def route_1(self):    
-        move = multiprocessing.Process(target = self.x_step.move, args=(self.brush_height, "Right", 60))#bewegung nach rechts
-        
-        self.start_check_border("right", move) #abbruch am rechten rand  
+        lst_args = [1, "Right", 1000]
+        #process = self.start_process(self.x_step.move)
+        process = multiprocessing.Process(target=self.x_step.move, args=(1, "Right", 60)) 
+        process.start()
+        self.check_border(process, "right")
+        #print("position reached")
+
         #print("Hello")
-        
         # Route oben unten
 '''
         while(self.ultrasonic_right < 0.1): #solagne rechter Rand nicht erreicht
