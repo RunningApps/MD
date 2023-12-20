@@ -18,10 +18,11 @@ class HBridge():
         self.direction(True)            # clockwise 
 
     def initialize_gpios(self) -> None:
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(self.PIN_PULS, GPIO.OUT)
-        GPIO.setup(self.PIN_ENABLE, GPIO.OUT)
-        GPIO.setup(self.PIN_DIR, GPIO.OUT)
+        #GPIO.setmode(GPIO.BCM)
+        #GPIO.setup(self.PIN_PULS, GPIO.OUT)
+        #GPIO.setup(self.PIN_ENABLE, GPIO.OUT)
+        #GPIO.setup(self.PIN_DIR, GPIO.OUT)
+        pass
 
     def puls(self, steps, frequency) -> None:
         period = 1/frequency
@@ -29,20 +30,21 @@ class HBridge():
         toff = ton
         
         for i in range(steps):
-            GPIO.output(self.PIN_PULS, True)
+            #GPIO.output(self.PIN_PULS, True)
+            print(f"Step: --- {i+1} ---")
             time.sleep(ton)
-            GPIO.output(self.PIN_PULS, False)
+            #GPIO.output(self.PIN_PULS, False)
             time.sleep(toff)
             
     def direction(self, dir: bool) -> None:
-        GPIO.output(self.PIN_DIR, dir) # False: Clockwise, True: Counter Clockwise
+        #GPIO.output(self.PIN_DIR, dir) # False: Clockwise, True: Counter Clockwise
         time.sleep(DELAY_SETUP)
 
     def turn_off(self)-> None:
-        GPIO.output(self.PIN_ENABLE, False)
+        #GPIO.output(self.PIN_ENABLE, False)
         time.sleep(DELAY_SETUP)
 
     def turn_on(self)-> None:
-        GPIO.output(self.PIN_ENABLE, True)
+        #GPIO.output(self.PIN_ENABLE, True)
         time.sleep(DELAY_SETUP)
 
