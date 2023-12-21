@@ -1,8 +1,5 @@
 from modules import Verfahrwege
-try:
-    import RPi.GPIO as GPIO
-except ImportError:
-    import SimulRPi.GPIO as GPIO
+import SimulRPi.GPIO as GPIO
 
 if __name__ == '__main__':
     #x_stepmotor = StepMotor(2, 4, 6)
