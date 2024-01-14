@@ -7,6 +7,14 @@ class StepMotor():
         self.circumference = 0.05
         self.stepsize = 1.8  
 
+        print("Stepmotor initialized...")
+
+    def disable(self):
+        self.hbridge.turn_off()
+
+    def enable(self):
+        self.hbridge.turn_on()
+
     def steps_per_revolution(self) -> int: 
         return 360 / self.stepsize
 

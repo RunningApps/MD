@@ -14,6 +14,8 @@ class HBridge():
         self.turn_off()                 # during instantiation the stepper is disabled
         self.direction(True)            # clockwise 
 
+        print("HBridge initialized...")
+
     def initialize_gpios(self) -> None:
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.PIN_PULS, GPIO.OUT)
@@ -26,10 +28,10 @@ class HBridge():
         toff = ton
         
         for i in range(steps):
-            GPIO.output(self.PIN_PULS, True)
-            #print(f"Step: --- {i+1} ---")
+            #GPIO.output(self.PIN_PULS, True)
+            print(f"Step: --- {i+1} ---")
             time.sleep(ton)
-            GPIO.output(self.PIN_PULS, False)
+            #GPIO.output(self.PIN_PULS, False)
             time.sleep(toff)
             
     def direction(self, dir: bool) -> None:

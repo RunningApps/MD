@@ -1,28 +1,28 @@
-import modules as module
-import SimulRPi.GPIO as GPIO
+from modules import *
+from multiprocessing import Process, Queue
+import test_distances as test
 
+def get_and_unpack_data(incoming: Queue, outgoing: Queue):
+   datastream = DataStream()
+
+   while(True):   # Simulates incoming data from Arduino
+      data = incoming.get()
+      #print(data)
+      unpacked_data = datastream.unpack_arduino_data(data)
+      outgoing.put(unpacked_data)
+      
 if __name__ == '__main__':
-    x_stepmotor = module.StepMotor(21, 20, 16)
-    #y_stepmotor = StepMotor(8, 10, 12)
    
-    x_stepmotor.move(0.02, "Right", 1000)
-    #y_stepmotor.move(0.02, "Left", 1000)
+   processhandler = ProcessHandler()
+   incoming = processhandler.memory()
+   outgoing = processhandler.memory()
 
-    #print("Exiting main process...")
-    #GPIO.cleanup()
+   processhandler.start_process(test.get_test_distance_data, incoming)
+   processhandler.start_process(get_and_unpack_data, incoming, outgoing)
+
+   while(True):
+      print(outgoing.get())
    
-    #vw = Verfahrwege()
-    #vw.route_1()
-    
-    #GPIO.cleanup()
-    #data_request_event = "Marke1;Gummi;300;30;Marke2;Hartgummi;500;50;100;Staub;1;123.5"
-
-    #while(True):
-       # while(data_request_event):
-    #data = data_request_event.split(";")
-
-    #print(data)
-
 
 
 
