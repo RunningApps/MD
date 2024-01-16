@@ -12,7 +12,9 @@ def get_and_unpack_data(incoming: Queue, outgoing: Queue):
       outgoing.put(unpacked_data)
       
 if __name__ == '__main__':
-   
+   vw = Verfahrwege()
+   vw.x_step.move(100,"Left", 120)
+''' 
    processhandler = ProcessHandler()
    incoming = processhandler.memory()
    outgoing = processhandler.memory()
@@ -22,7 +24,7 @@ if __name__ == '__main__':
 
    while(True):
       print(outgoing.get())
-   
+'''
 
 
 
