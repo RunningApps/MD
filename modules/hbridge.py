@@ -1,5 +1,7 @@
-import SimulRPi.GPIO as GPIO
-
+try:
+    import RPi.GPIO as GPIO
+except ImportError:
+    import SimulRPi.GPIO as GPIO
 import time
 
 DELAY_SETUP  = 5*10**-6     # Delay time for internal circuitry to stabilize (Mikrosekunde)
@@ -28,21 +30,21 @@ class HBridge():
         toff = ton
         
         for i in range(steps):
-            #GPIO.output(self.PIN_PULS, True)
+            GPIO.output(self.PIN_PULS, True)
             print(f"Step: --- {i+1} ---")
             time.sleep(ton)
-            #GPIO.output(self.PIN_PULS, False)
+            GPIO.output(self.PIN_PULS, False)
             time.sleep(toff)
             
     def direction(self, dir: bool) -> None:
-        #GPIO.output(self.PIN_DIR, dir) # False: Clockwise, True: Counter Clockwise
+        GPIO.output(self.PIN_DIR, dir) # False: Clockwise, True: Counter Clockwise
         time.sleep(DELAY_SETUP)
 
     def turn_off(self)-> None:
-        #GPIO.output(self.PIN_ENABLE, False)
+        GPIO.output(self.PIN_ENABLE, False)
         time.sleep(DELAY_SETUP)
 
     def turn_on(self)-> None:
-        #GPIO.output(self.PIN_ENABLE, True)
+        GPIO.output(self.PIN_ENABLE, True)
         time.sleep(DELAY_SETUP)
 
