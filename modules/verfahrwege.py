@@ -9,7 +9,7 @@ class Verfahrwege():
     def __init__(self) -> None:
         self.processhandler = ProcessHandler()
         self.ultra_sonic  = UltraSonic()
-        self.x_step = StepMotor(2, 4, 6)
+        self.x_step = StepMotor(21, 20, 16) # Raspi GPIO pins
         self.y_step = StepMotor(8, 10, 12)
     
     def check_border(self, move: Process) -> None:

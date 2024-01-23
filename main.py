@@ -1,6 +1,7 @@
 from modules import *
 from multiprocessing import Process, Queue
-import test_distances as test
+from gui import gui
+import sqlite3
 
 def get_and_unpack_data(incoming: Queue, outgoing: Queue):
    datastream = DataStream()
@@ -12,8 +13,14 @@ def get_and_unpack_data(incoming: Queue, outgoing: Queue):
       outgoing.put(unpacked_data)
       
 if __name__ == '__main__':
-   vw = Verfahrwege()
-   vw.x_step.move(100,"Left", 120)
+   
+   #vw = Verfahrwege()
+   #vw.x_step.move(100,"Left", 120)
+
+   #while(True):
+      gui.gui()
+
+
 ''' 
    processhandler = ProcessHandler()
    incoming = processhandler.memory()
@@ -25,6 +32,10 @@ if __name__ == '__main__':
    while(True):
       print(outgoing.get())
 '''
+
+   
+
+
 
 
 
